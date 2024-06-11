@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trips Log</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f9f9f9;
+		}
+		.trip-log {
+			max-width: 800px;
+			margin: 40px auto;
+			padding: 20px;
+			background-color: #fff;
+			border: 1px solid #ddd;
+			border-radius: 10px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
+		.trip {
+			margin-bottom: 20px;
+			padding: 20px;
+			border-bottom: 1px solid #ccc;
+		}
+		.trip:last-child {
+			border-bottom: none;
+		}
+		.trip-header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			border-radius: 10px 10px 0 0;
+		}
+		.trip-header h2 {
+			margin: 0;
+		}
+		.trip-content {
+			padding: 20px;
+		}
+		.trip-content label {
+			display: block;
+			margin-bottom: 10px;
+		}
+		.trip-content input[type="text"], .trip-content textarea {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 20px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+		}
+		.trip-content textarea {
+			height: 100px;
+		}
+		.trip-content button[type="button"] {
+			background-color: #333;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+		.trip-content button[type="button"]:hover {
+			background-color: #444;
+		}
+	</style>
+</head>
+<body>
+	<div class="trip-log">
+		<h1>Trips Log</h1>
+		<!-- individual trip template -->
+		<div class="trip">
+			<div class="trip-header">
+				<h2>Trip #<span class="trip-number">1</span>: <span class="trip-name"></span></h2>
+			</div>
+			<div class="trip-content">
+				<label for="trip-dates">Dates:</label>
+				<input type="text" id="trip-dates" class="trip-dates">
+				<label for="trip-destination">Destination:</label>
+				<input type="text" id="trip-destination" class="trip-destination">
+				<label for="trip-transport">Mode of Transport:</label>
+				<input type="text" id="trip-transport" class="trip-transport">
+				<label for="trip-notes">Notes:</label>
+				<textarea id="trip-notes" class="trip-notes"></textarea>
+				<button type="button" class="save-trip">Save Trip</button>
+			</div>
+		</div>
+		<!-- add more trip templates here -->
+	</div>
+</body>
+</html>
