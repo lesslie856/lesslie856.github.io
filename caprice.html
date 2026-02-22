@@ -2,90 +2,149 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>Protected</title>
-
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<title>Private Text</title>
 
 <style>
-body{
-    font-family: "Helvetica Neue", Arial;
-    background:#f5f6fa;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Georgia","Times New Roman",serif;
 }
-#box{
-    background:white;
-    padding:35px 45px;
-    border-radius:14px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+
+body{
+    background:black;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* 背景 */
+.bg{
+    position:fixed;
+    inset:0;
+    background:url("src/longgoodbye.png") center/cover no-repeat;
+    filter:brightness(0.55) blur(3px);
+    z-index:-2;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.4);
+    z-index:-1;
+}
+
+/* 登录框 */
+.login{
     text-align:center;
-    width:440px;
+    color:white;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    padding:45px 60px;
+    border-radius:22px;
+    box-shadow:0 0 50px rgba(0,0,0,0.6);
+    animation:fade 1s ease;
 }
+
 input{
-    padding:10px;
-    font-size:16px;
-    width:80%;
-}
-button{
-    margin-top:15px;
-    padding:10px 25px;
-    font-size:16px;
+    margin-top:20px;
+    padding:12px;
     border:none;
-    border-radius:6px;
-    background:#4a69bd;
+    outline:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    text-align:center;
+    font-size:16px;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 30px;
+    border:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.2);
     color:white;
     cursor:pointer;
+    transition:.3s;
 }
-#content{
+
+button:hover{
+    background:rgba(255,255,255,0.35);
+}
+
+/* 内容容器 */
+.viewer{
     display:none;
-    text-align:left;
+    position:absolute;
+    inset:0;
+    overflow:auto;
+    padding:80px 20px;
+    text-align:center;
+    animation:fade 1.2s ease;
+}
+
+/* 文本框 */
+.textbox{
+    max-width:800px;
+    margin:auto;
+    color:#f3f3f3;
+    font-size:20px;
+    line-height:1.9;
+    letter-spacing:1px;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(10px);
+    padding:60px 70px;
+    border-radius:25px;
+    box-shadow:0 0 60px rgba(0,0,0,0.8);
+    white-space:pre-wrap;
+}
+
+/* 动画 */
+@keyframes fade{
+    from{opacity:0;transform:translateY(15px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* 滚动条美化 */
+.viewer::-webkit-scrollbar{
+    width:8px;
+}
+.viewer::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,0.2);
+    border-radius:10px;
 }
 </style>
 </head>
 <body>
 
-<div id="box">
+<div class="bg"></div>
+<div class="overlay"></div>
 
-<div id="login">
-<h2>生日YearMonthDay 8位数</h2>
-<input type="password" id="pwd">
-<br>
-<button onclick="check()">进入</button>
+<!-- 登录 -->
+<div class="login" id="login">
+    <h2>Enter Birthday (YYYY-MM-DD, 8位数)</h2>
+    <input type="password" id="pwd" placeholder="Password">
+    <br>
+    <button onclick="unlock()">Unlock</button>
 </div>
 
-<div id="content"></div>
-
+<!-- 内容 -->
+<div class="viewer" id="viewer">
+    <div class="textbox" id="text"></div>
 </div>
 
 <script>
-function check(){
-    if(document.getElementById("pwd").value==="20020114"){
-        document.getElementById("login").style.display="none";
+const PASSWORD="20020114";
 
-        const md = `
-        # 111
-        # 111
-        # 111
-# 111
-# 111
-        # 111
-        # 111
-        # 111
-# 111
-# 111
-        # 111
-        # 111
-        # 111
-# 111
-# 111
-        # 111
-        # 111
-        # 111
+/* 把你的文本粘贴到这里即可 */
+const contentText = `
 
 我猜你今天会看吧
+今天过了我还会想吗
 今天过了我还会后悔没把吞下的话说清楚吗
 rydeen856
 18574642735
@@ -94,6 +153,7 @@ haipengzhou856@gmail.com
 我想和你在一起
 和我一起好好感受生活
 重新认识我和你
+
 
 十年前这天你早上推开我
 我哭了一上午
@@ -220,7 +280,7 @@ rydeen  rydeen  rydeen
 两个人都心安慢慢忘了这些吧
 等生活被其他杂乱填满
 等你在枕边和你的爱人不经意谈起感情经历
-等我和我的伴侣在床上走马灯细数过去
+我也会努力找伴侣在床上走马灯细数过去
 一起做个
 《漫长的告别》
 是我送给你信件上的专辑里的歌
@@ -232,10 +292,15 @@ rydeen  rydeen  rydeen
 就这样走远吧
 偶尔想起可爱的日子
 再见 谢谢 祝你幸福”
-        `;
+再见 我的初恋
+`;
 
-        document.getElementById("content").innerHTML = marked.parse(md);
-        document.getElementById("content").style.display="block";
+function unlock(){
+    const val=document.getElementById("pwd").value;
+    if(val===PASSWORD){
+        document.getElementById("login").style.display="none";
+        document.getElementById("viewer").style.display="block";
+        document.getElementById("text").textContent=contentText;
     }else{
         alert("密码错误");
     }
