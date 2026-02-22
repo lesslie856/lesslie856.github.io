@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渦になる | Log</title>
+    <style>
+        :root {
+            --bg-color: #0f161e;           /* 专辑深沉基调 */
+            --accent-blue: #2c3e50;        /* 采样自封面的阴影蓝 */
+            --text-main: #d1d5db;          /* 柔和文字色 */
+            --text-dim: #6b7280;           /* 次要文字/日期 */
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+    /* 原来 #0f161e 太“泥灰”，改成更冷的深蓝底 */
+    --bg-color: #0b1520;
+
+    /* 让蓝更“有色”，但仍然克制 */
+    --accent-blue: #355b72;
+
+    --text-main: #d1d5db;
+    --text-dim: #6b7280;
+    --border-color: rgba(255, 255, 255, 0.05);
+}
+
+body {
+    background-color: var(--bg-color);
+    /* 光晕从“灰蓝”改为更冷的青蓝，并稍微提升一点存在感 */
+    background-image:
+        radial-gradient(circle at 50% 45%,
+            rgba(53, 91, 114, 0.38) 0%,
+            rgba(11, 21, 32, 1) 70%),
+        radial-gradient(circle at 20% 80%,
+            rgba(65, 120, 128, 0.18) 0%,
+            transparent 55%);
+    color: var(--text-main);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* 维持《渦になる》背景美学：雾层别太“洗灰”，让封面颜色多透出来一点 */
+.vortex-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: url('./caprice_fig/vortex.png') no-repeat center center;
+    background-size: cover;
+
+    /* 原 0.12 + blur 25 会偏灰，改成更“有色”的雾 */
+    opacity: 0.16;
+    filter: blur(18px) saturate(1.15) contrast(1.05);
+}
+
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        header h1 {
+            font-weight: 300;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 15px;
+            letter-spacing: 0.2em;
+        }
+
+        /* Logo 部分更新 */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.7;
+            transition: opacity 0.6s ease;
+        }
+
+        .logo-container:hover {
+            opacity: 1;
+        }
+
+        .logo-img {
+            width: 140px; /* 适中的 Logo 大小 */
+            height: auto;
+            border-radius: 2px; /* 保持图片原本的利落感 */
+            filter: grayscale(20%); /* 微微去色以融入整体暗色调 */
+        }
+
+        /* 日志条目 */
+        .log-entry {
+            margin-bottom: 90px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .date {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            margin-bottom: 15px;
+            display: block;
+            border-left: 1px solid var(--accent-blue);
+            padding-left: 15px;
+        }
+
+        .content {
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+
+        .content p {
+            margin-bottom: 25px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 0.1em;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* 隐藏式滚动条 */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-blue); }
+
+    </style>
+</head>
+<body>
+
+    <div class="vortex-bg"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <!-- ✅ logo 改为 revenge.png（放在 ./caprice_fig/revenge.png） -->
+                <img src="./caprice_fig/revenge.png" alt="Revenge Logo" class="logo-img" loading="eager" decoding="async">
+            </div>
+            <h1> Sign </h1>
+
+
+        </header>
+
+        <main>
+            <article class="log-entry">
+                <span class="date">2026.01.03 </span>
+                <div class="content">
+                    <center>
+
+                    <p>
+                        “我的两步大概是你的三步<br>
+                        我的四步大概是你的六步<br>
+                        Fmaj 7转E是乌云低气压<br>
+                        小拇指摁住3品的6弦开始放晴<br>
+                        左侧的心脏可以停下<br>
+                        因为在靠近你的时候<br>
+                        我大概也能感受到右边的跳动”<br>
+                        这段肤浅的构想<br>
+                        倒不失为朗朗上口的口水歌<br>
+                        <br>
+                                                易感<br>
+                        阿波罗之怀中教育道<br>
+                        尽量节约<br>
+                        或者<br>
+                        滥用无度<br>
+                        海报开始皱掉<br>
+                        我也解析不了重复了百遍的音符<br>
+                        什么历史啊 政治啊
+                        科学什么的<br>
+                        我都想了一遍<br>
+                        而现在唯有金阁<br>
+
+                    金阁与我矗立在夺目的高峰上对视而望<br>
+                    这头的青春随着每一刻的结晶<br>
+                    变得愈发沉重<br>
+                    于是美的天秤不由得抬举着金阁<br>
+                    越发遥远<br>
+                    芬芳的肉体凝结着<br>
+                    拖着半生不熟的精神也一块下坠<br>
+
+
+                    </p>
+                </div>
+                    </center>
+
+            </article>
+
+            <article class="log-entry">
+                <span class="date">2025/07/05, 00:35 / Mid-night</span>
+                <div class="content">
+                    <p>
+                             <center>
+愤怒和悲哀同某种热情一样<br>
+          是缺乏高雅情趣之心所犯的过错<br><br>
+          冰球伴着烛光<br>
+          杯中闪烁的生命之水<br>
+          发出阵阵溶解消蚀摩挲的声音<br>
+          在烛蜡挥发的柏油香气中<br>
+        飘香入腹<br>
+<br>
+          <img src="./caprice_fig/IMG_0717.jpg" height="300" style="margin-bottom:-3px">
+<br>
+          出租屋内添置人生的第一束鲜花<br>
+          似血液一般<br>
+          容易衰败腐坏<br>
+          <br>
+          上海的郊外<br>
+          安静的可怕<br>
+          没有窗帘的床头<br>
+          半个月来日日迎接恼人的晨光<br>
+          困乏中陷入日复一日的循环<br>
+          日渐炎热的无聊琐碎里<br>
+          在心底一团血红的落日<br>
+          灼烧一刻刻的冲动<br>
+          每晚电车归家的路途<br>
+          想起奔马<br>
+          用刀腹突入腹中<br>
+          在眼睑将落日的旭阳再度升起<br>
+          心境也就献身伟大的构想<br>
+死<br>
+          <br>
+          此刻午夜<br>
+          传来流浪猫凄惨的声音<br>
+          <br>
+          枕边的金阁寺<br>
+          待到京都亲临心中的臆想<br>
+          也会把这该死的<br>
+          期待<br>
+          统统烧掉<br>
+
+<br>
+          おやすみなさい<br>
+おやすみなさい<br>
+<center>
+</center>
+                    </p>
+
+                </div>
+            </article>
+
+
+<article class="log-entry">
+                <span class="date">2025/05/10, 01:14 </span>
+                <div class="content">
+                    <center>
+
+                    <p>
+嘿<br>
+AI说酒精会加剧美利曲辛的效果<br>
+两种神经中枢的抑制剂<br>
+会让我停掉呼吸吗<br>
+<br><br>
+嘿<br>
+我想明天换上我的新买的托特包<br>
+我想以后行街时里面塞满了我想要的东西<br>
+一壶酒<br>
+一个相机<br>
+一个娃娃<br>
+一些猫条<br>
+一些药片<br>
+和一份想和你说的期待<br>
+期待你问我为什么包里什么都有<br>
+我会调好龙舌兰和威士忌的比例<br>
+加上一些柠檬汁<br>
+因为我很喜欢柠檬的香味和酸涩<br>
+就像幻象的味道<br>
+<br>
+嘿<br>
+我有好好活着<br>
+AI Lab的面试也通过了<br>
+羊文学的海外场也放票了<br>
+论文进展顺利<br>
+马上就能赶完了<br>
+<br>
+嘿<br>
+今晚的月亮好亮<br>
+隔着云层朦朦胧胧的<br>
+像你一样<br>
+若隐若现<br>
+<br>
+嘿<br>
+半夜回来的路上碰到了秋秋<br>
+还有一只从来没见过的狸花<br>
+它们一点也不怕我呀<br>
+它们害怕手机的闪光灯<br>
+所以我记录不到他们<br>
+手上全是毛<br>
+          你的布偶有戴上我送的铃铛吗<br>
+<br>
+          嘿<br>
+          《深呼吸》<br>
+          也是羊文学的一首歌<br>
+          古时人接物托思<br>
+          月亮啊 花朵啊 秋风啊<br>
+          什么都能引申啊<br>
+          这刻 深呼吸吧<br>
+          诉说我想要引申的意味<br>
+          And Give You More than Word<br><br>
+           嘿<br>
+          深呼吸<br>
+                    </p>
+                </div>
+                    </center>
+
+            </article>
+
+
+        </main>
+
+        <footer>
+            &copy; Rydeen via ChatGPT 5.2 Thinking
+        </footer>
+    </div>
+
+</body>
+</html>
