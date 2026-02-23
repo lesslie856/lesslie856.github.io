@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>Private Text</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Georgia","Times New Roman",serif;
+}
+
+body{
+    background:black;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* 背景 */
+.bg{
+    position:fixed;
+    inset:0;
+    background:url("src/longgoodbye.png") center/cover no-repeat;
+    filter:brightness(0.55) blur(3px);
+    z-index:-2;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.4);
+    z-index:-1;
+}
+
+/* 登录框 */
+.login{
+    text-align:center;
+    color:white;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    padding:45px 60px;
+    border-radius:22px;
+    box-shadow:0 0 50px rgba(0,0,0,0.6);
+    animation:fade 1s ease;
+}
+
+input{
+    margin-top:20px;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    text-align:center;
+    font-size:16px;
+}
+
+button{
+    margin-top:20px;
+    padding:10px 30px;
+    border:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.2);
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:rgba(255,255,255,0.35);
+}
+
+/* 内容容器 */
+.viewer{
+    display:none;
+    position:absolute;
+    inset:0;
+    overflow:auto;
+    padding:80px 20px;
+    text-align:center;
+    animation:fade 1.2s ease;
+}
+
+/* 文本框 */
+.textbox{
+    max-width:800px;
+    margin:auto;
+    color:#f3f3f3;
+    font-size:20px;
+    line-height:1.9;
+    letter-spacing:1px;
+    background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(10px);
+    padding:60px 70px;
+    border-radius:25px;
+    box-shadow:0 0 60px rgba(0,0,0,0.8);
+    white-space:pre-wrap;
+}
+
+/* 火焰图片 */
+.fire-img{
+    margin-top:300px;
+    max-width:300px;
+    opacity:0.9;
+}
+
+/* 动画 */
+@keyframes fade{
+    from{opacity:0;transform:translateY(15px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* 滚动条美化 */
+.viewer::-webkit-scrollbar{
+    width:8px;
+}
+.viewer::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,0.2);
+    border-radius:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="overlay"></div>
+
+<!-- 登录 -->
+<div class="login" id="login">
+    <h2>Your Birthday (YYYYMMDD)</h2>
+    <input type="password" id="pwd" placeholder="Password">
+    <br>
+    <button onclick="unlock()">Unlock</button>
+</div>
+
+<!-- 内容 -->
+<div class="viewer" id="viewer">
+    <div class="textbox" id="text"></div>
+</div>
+
+<script>
+const PASSWORD="20020114";
+
+/* 把你的文本粘贴到这里即可 */
+const contentText = `
+唐家月
+请和我结婚吧
+我爱你
+我也恨你
+请拒绝我
+跟以前一样不要给我回应
+等生活被其他杂乱填满
+两个人都心安慢慢忘了这些吧
+等你对枕边人再不会愧于不安
+我也会努力找伴侣在床上走马灯细数过去
+一起做个
+《漫长的告别》
+是我送给你信件上的专辑里的歌
+蓝色的背景和布满的雏菊
+蘑菇帝国乐队展开的歌词是我送给你的话和花
+
+“
+言えない言葉は日常にうずめ
+无法言语的话埋藏在重复的日子里
+
+忘れたふりしてかりそめの愛を知る
+假装忘记短暂的爱意
+
+心のどこかでまだ少し信じてた
+心里的某个角落始终还在相信
+
+爱おしい幻このままどこまで行こう
+可爱的幻想 就这样走远吧
+
+脳内LSDを嚥下 ねえ、SOS言いたい
+咽下药剂 发出求救
+
+愛おしい日々だけ、たまに思い出してね
+偶尔想起可爱的日子
+
+さよならありがと幸せになってね
+再见 谢谢 祝你幸福”
+
+4月28日是你最后一次和我说话
+十年后的这天
+我会把御守烧掉
+它该和燃尽的金阁寺一起
+再见我的初恋
+`;
+
+function unlock(){
+    const val=document.getElementById("pwd").value;
+    if(val===PASSWORD){
+        document.getElementById("login").style.display="none";
+        document.getElementById("viewer").style.display="block";
+
+        const box=document.getElementById("text");
+
+        box.innerHTML = `
+<div style="white-space:pre-wrap;">
+${contentText}
+</div>
+<div style="text-align:center;">
+<img src="src/fire.png"   class="fire-img">
+</div>
+        `;
+    }else{
+        alert("密码错误");
+    }
+}
+</script>
+
+</body>
+</html>
